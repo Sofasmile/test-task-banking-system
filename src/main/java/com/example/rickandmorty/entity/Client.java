@@ -5,7 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 
 @Table(name = "client")
 @Entity
@@ -17,9 +20,21 @@ public class Client {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
-    // List<Account> accounts -> one to many -> [client_id, account_id]
+    // JoinColumn annotation will create additional column - `client_id` in `account` table
+    // additional table won't be created
+    @OneToMany
+    @JoinColumn(name = "client_id")
+    private List<Account> accounts;
 
     public Client() {
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
     }
 
     public Long getId() {
