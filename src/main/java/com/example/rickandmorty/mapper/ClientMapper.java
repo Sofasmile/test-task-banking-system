@@ -6,9 +6,7 @@ import com.example.rickandmorty.dto.ClientResponseDto;
 import com.example.rickandmorty.entity.Account;
 import com.example.rickandmorty.entity.Client;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class ClientMapper {
@@ -22,6 +20,8 @@ public class ClientMapper {
         Client client = new Client();
         client.setFirstName(clientRequestDto.getFirstName());
         client.setLastName(clientRequestDto.getLastName());
+        List<Account> accounts = accountMapper.toEntity(clientRequestDto.getAccounts());
+        client.setAccounts(accounts);
         return client;
     }
 
@@ -30,19 +30,8 @@ public class ClientMapper {
         clientResponseDto.setFirstName(client.getFirstName());
         clientResponseDto.setLastName(client.getLastName());
         clientResponseDto.setId(client.getId());
-        return clientResponseDto;
-    }
-
-    public ClientResponseDto toDto(Client client, List<Account> accounts) {
-        List<AccountResponseDto> accountsDto = accounts.stream()
-                .map(a -> accountMapper.toDto(a))
-                .collect(Collectors.toList());
-
-        ClientResponseDto clientResponseDto = new ClientResponseDto();
-        clientResponseDto.setFirstName(client.getFirstName());
-        clientResponseDto.setLastName(client.getLastName());
-        clientResponseDto.setId(client.getId());
-        clientResponseDto.setAccounts(accountsDto);
+        List<AccountResponseDto> accountResponseDtos = accountMapper.toDto(client.getAccounts());
+        clientResponseDto.setAccounts(accountResponseDtos);
         return clientResponseDto;
     }
 }

@@ -4,8 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 
 @Entity
@@ -16,9 +14,6 @@ public class Account {
     private String number;
     private String type;
     private BigDecimal balance;
-    @ManyToOne
-    @JoinColumn(name = "client_id")
-    private Client client;
 
     public Account() {
     }
@@ -39,10 +34,6 @@ public class Account {
         return balance;
     }
 
-    public Client getClient() {
-        return client;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -57,9 +48,5 @@ public class Account {
 
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
     }
 }
