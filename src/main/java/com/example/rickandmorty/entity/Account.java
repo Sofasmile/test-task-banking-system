@@ -20,7 +20,6 @@ public class Account {
     @JoinColumn(name = "client_id")
     private Client client;
 
-    // асоціація -> композиція/агрегація
     public Account() {
     }
 
